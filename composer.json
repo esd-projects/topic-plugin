@@ -1,6 +1,9 @@
 {
   "require": {
-    "esd/base-server": "~0.1"
+    "esd/base-server": "~0.1",
+    "esd/uid-plugin": "~0.1",
+    "esd/easyroute-plugin": "~0.1",
+    "php-ds/php-ds": "^1.2"
   },
   "autoload": {
     "psr-4": {
