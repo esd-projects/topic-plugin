@@ -1,0 +1,26 @@
+{
+  "require": {
+    "esd/base-server": "~0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "ESD\\Plugins\\": "src/",
+      "ESD\\Plugins\\Topic\\ExampleClass\\": "exampleClass/"
+    }
+  },
+  "authors": [
+    {
+      "name": "tmtbe",
+      "email": "896369042@qq.com",
+      "homepage": "https://github.com/tmtbe"
+    }
+  ],
+  "name": "esd/topic-plugin",
+  "type": "library",
+  "keywords": [
+    "server",
+    "swoole"
+  ],
+  "description": "topic-plugin",
+  "license": "MIT"
+}
