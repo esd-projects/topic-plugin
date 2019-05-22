@@ -11,6 +11,7 @@ namespace ESD\Plugins\Topic;
 
 use Ds\Set;
 use ESD\BaseServer\Memory\CrossProcess\Table;
+use ESD\BaseServer\Plugins\Logger\GetLogger;
 use ESD\Plugins\Pack\GetBoostSend;
 use ESD\Plugins\Uid\GetUid;
 
@@ -18,6 +19,7 @@ class Topic
 {
     use GetBoostSend;
     use GetUid;
+    use GetLogger;
     /**
      * @var Table
      */
@@ -67,6 +69,7 @@ class Topic
     {
         $this->addSubFormTable($topic, $uid);
         $this->topicTable->set($topic . $uid, ["topic" => $topic, "uid" => $uid]);
+        $this->debug("$uid Add Sub $topic");
     }
 
     /**
@@ -84,18 +87,20 @@ class Topic
             }
         }
         $this->topicTable->del($topic . $uid);
+        $this->debug("$uid Remove Sub $topic");
     }
 
     /**
-     * 清除Uid的订阅
-     * @param $uid
+     * 清除Fd的订阅
+     * @param $fd
      */
-    public function clearUidSub($uid)
+    public function clearFdSub($fd)
     {
-        if (empty($uid)) return;
+        if (empty($fd)) return;
+        $uid = $this->getFdUid($fd);
+        if ($uid == null) return;
         foreach ($this->subArr as $topic => $sub) {
-            $sub->remove($uid);
-            $this->topicTable->del($topic . $uid);
+            $this->removeSub($topic, $uid);
         }
     }
 

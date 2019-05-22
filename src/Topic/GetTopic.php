@@ -79,18 +79,18 @@ trait GetTopic
     }
 
     /**
-     * 清除Uid的订阅
-     * @param $uid
+     * 清除Fd的订阅
+     * @param $fd
      * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
-    public function clearUidSub($uid)
+    public function clearFdSub($fd)
     {
-        if (empty($uid)) {
-            $this->warn("uid is empty");
+        if (empty($fd)) {
+            $this->warn("fd is empty");
             return;
         }
         $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class,true);
-        $rpcProxy->removeSub($uid);
+        $rpcProxy->clearFdSub($fd);
     }
 
     /**
