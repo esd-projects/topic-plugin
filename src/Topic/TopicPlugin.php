@@ -65,6 +65,12 @@ class TopicPlugin extends AbstractPlugin
         $pluginInterfaceManager->addPlug(new UidPlugin());
     }
 
+    /**
+     * @param Context $context
+     * @return mixed|void
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
     public function init(Context $context)
     {
         parent::init($context);
