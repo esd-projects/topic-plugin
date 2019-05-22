@@ -14,7 +14,7 @@ use ESD\BaseServer\Server\PlugIn\AbstractPlugin;
 use ESD\BaseServer\Server\PlugIn\PluginInterfaceManager;
 use ESD\BaseServer\Server\Server;
 use ESD\Plugins\Aop\AopConfig;
-use ESD\Plugins\Uid\Aspect\TopicAspect;
+use ESD\Plugins\Topic\Aspect\TopicAspect;
 use ESD\Plugins\Uid\UidConfig;
 use ESD\Plugins\Uid\UidPlugin;
 

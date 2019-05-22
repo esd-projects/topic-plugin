@@ -9,14 +9,12 @@
 namespace ESD\Plugins\Topic;
 
 
-use ESD\BaseServer\Plugins\Logger\GetLogger;
 use ESD\BaseServer\Server\Server;
 use ESD\Plugins\ProcessRPC\GetProcessRpc;
 
 trait GetTopic
 {
     use GetProcessRpc;
-    use GetLogger;
     /**
      * @var TopicConfig
      */
@@ -58,7 +56,7 @@ trait GetTopic
             $this->warn("uid is empty");
             return;
         }
-        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class,true);
+        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class, true);
         $rpcProxy->addSub($topic, $uid);
     }
 
@@ -74,7 +72,7 @@ trait GetTopic
             $this->warn("uid is empty");
             return;
         }
-        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class,true);
+        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class, true);
         $rpcProxy->removeSub($topic, $uid);
     }
 
@@ -89,7 +87,7 @@ trait GetTopic
             $this->warn("fd is empty");
             return;
         }
-        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class,true);
+        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class, true);
         $rpcProxy->clearFdSub($fd);
     }
 
@@ -101,7 +99,7 @@ trait GetTopic
      */
     public function pub($topic, $data, $excludeUidList = [])
     {
-        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class,true);
+        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class, true);
         $rpcProxy->pub($topic, $data, $excludeUidList);
     }
 }
