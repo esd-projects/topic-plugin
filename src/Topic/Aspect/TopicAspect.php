@@ -6,7 +6,7 @@
  * Time: 15:46
  */
 
-namespace ESD\Plugins\Uid\Aspect;
+namespace ESD\Plugins\Topic\Aspect;
 
 use ESD\BaseServer\Plugins\Logger\GetLogger;
 use ESD\Plugins\Topic\GetTopic;
