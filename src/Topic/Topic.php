@@ -11,7 +11,7 @@ namespace ESD\Plugins\Topic;
 
 use Ds\Set;
 use ESD\BaseServer\Memory\CrossProcess\Table;
-use ESD\Plugins\EasyRoute\GetBoostSend;
+use ESD\Plugins\Pack\GetBoostSend;
 use ESD\Plugins\Uid\GetUid;
 
 class Topic
