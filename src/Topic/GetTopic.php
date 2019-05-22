@@ -36,6 +36,7 @@ trait GetTopic
      */
     public function hasTopic($topic, $uid)
     {
+        if (empty($uid)) return false;
         $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class);
         return $rpcProxy->hasTopic($topic, $uid);
     }
@@ -48,6 +49,7 @@ trait GetTopic
      */
     public function addSub($topic, $uid)
     {
+        if (empty($uid)) return;
         $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class,true);
         $rpcProxy->addSub($topic, $uid);
     }
@@ -60,6 +62,7 @@ trait GetTopic
      */
     public function removeSub($topic, $uid)
     {
+        if (empty($uid)) return;
         $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class,true);
         $rpcProxy->removeSub($topic, $uid);
     }
@@ -71,6 +74,7 @@ trait GetTopic
      */
     public function clearUidSub($uid)
     {
+        if (empty($uid)) return;
         $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class,true);
         $rpcProxy->removeSub($uid);
     }
