@@ -13,6 +13,8 @@ use ESD\BaseServer\Server\Context;
 use ESD\BaseServer\Server\PlugIn\AbstractPlugin;
 use ESD\BaseServer\Server\PlugIn\PluginInterfaceManager;
 use ESD\BaseServer\Server\Server;
+use ESD\Plugins\Aop\AopConfig;
+use ESD\Plugins\Uid\Aspect\TopicAspect;
 use ESD\Plugins\Uid\UidConfig;
 use ESD\Plugins\Uid\UidPlugin;
 
@@ -31,6 +33,10 @@ class TopicPlugin extends AbstractPlugin
      * @var Topic
      */
     private $topic;
+    /**
+     * @var TopicAspect
+     */
+    private $topicAspect;
 
     /**
      * TopicPlugin constructor.
@@ -57,6 +63,14 @@ class TopicPlugin extends AbstractPlugin
     {
         parent::onAdded($pluginInterfaceManager);
         $pluginInterfaceManager->addPlug(new UidPlugin());
+    }
+
+    public function init(Context $context)
+    {
+        parent::init($context);
+        $aopConfig = Server::$instance->getContainer()->get(AopConfig::class);
+        $this->topicAspect = new TopicAspect();
+        $aopConfig->addAspect($this->topicAspect);
     }
 
     /**
