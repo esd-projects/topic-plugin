@@ -100,6 +100,7 @@ class TopicPlugin extends AbstractPlugin
         if (Server::$instance->getProcessManager()->getCurrentProcess()->getProcessName() == $this->topicConfig->getProcessName()) {
             //topic进程
             $this->topic = new Topic($this->topicTable);
+            $this->setToDIContainer(Topic::class, $this->topic);
         }
         $this->ready();
     }
