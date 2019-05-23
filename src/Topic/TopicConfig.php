@@ -17,7 +17,7 @@ class TopicConfig extends BaseConfig
     /**
      * @var int
      */
-    protected $cacheTopicCount = 100000;
+    protected $cacheTopicCount = 10000;
     /**
      * 默认在helper进程，可设置其他名字，将新建进程
      * @var string
