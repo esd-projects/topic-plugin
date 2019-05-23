@@ -92,6 +92,21 @@ trait GetTopic
     }
 
     /**
+     * 清除Uid的订阅
+     * @param $uid
+     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+     */
+    public function clearUidSub($uid)
+    {
+        if (empty($uid)) {
+            $this->warn("uid is empty");
+            return;
+        }
+        $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class, true);
+        $rpcProxy->clearUidSub($uid);
+    }
+
+    /**
      * @param $topic
      * @param $data
      * @param array $excludeUidList

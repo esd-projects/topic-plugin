@@ -12,6 +12,7 @@ use ESD\BaseServer\Plugins\Logger\GetLogger;
 use ESD\Plugins\Aop\OrderAspect;
 use ESD\Plugins\Topic\GetTopic;
 use ESD\Plugins\Uid\Aspect\UidAspect;
+use ESD\Plugins\Uid\GetUid;
 use Go\Aop\Intercept\MethodInvocation;
 use Go\Lang\Annotation\Before;
 
@@ -19,6 +20,7 @@ class TopicAspect extends OrderAspect
 {
     use GetLogger;
     use GetTopic;
+    use GetUid;
 
     public function __construct()
     {
@@ -36,7 +38,11 @@ class TopicAspect extends OrderAspect
     protected function afterTcpClose(MethodInvocation $invocation)
     {
         list($fd, $reactorId) = $invocation->getArguments();
-        $this->clearFdSub($fd);
+        //这里是跨进程调用，所以用uid，不用fd，避免时序错误
+        $uid = $this->getFdUid($fd);
+        if ($uid != null) {
+            $this->clearUidSub($uid);
+        }
     }
 
     /**

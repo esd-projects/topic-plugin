@@ -98,12 +98,20 @@ class Topic
     {
         if (empty($fd)) return;
         $uid = $this->getFdUid($fd);
-        if ($uid == null) return;
+        $this->clearUidSub($uid);
+    }
+
+    /**
+     * 清除Uid的订阅
+     * @param $uid
+     */
+    public function clearUidSub($uid)
+    {
+        if (empty($uid)) return;
         foreach ($this->subArr as $topic => $sub) {
             $this->removeSub($topic, $uid);
         }
     }
-
 
     /**
      * 构建订阅树,只允许5层
