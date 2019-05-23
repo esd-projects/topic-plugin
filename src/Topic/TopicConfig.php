@@ -19,6 +19,10 @@ class TopicConfig extends BaseConfig
      */
     protected $cacheTopicCount = 10000;
     /**
+     * @var int
+     */
+    protected $topicMaxLength = 256;
+    /**
      * 默认在helper进程，可设置其他名字，将新建进程
      * @var string
      */
@@ -58,5 +62,21 @@ class TopicConfig extends BaseConfig
     public function setProcessName(string $processName): void
     {
         $this->processName = $processName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTopicMaxLength(): int
+    {
+        return $this->topicMaxLength;
+    }
+
+    /**
+     * @param int $topicMaxLength
+     */
+    public function setTopicMaxLength(int $topicMaxLength): void
+    {
+        $this->topicMaxLength = $topicMaxLength;
     }
 }

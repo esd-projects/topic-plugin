@@ -64,9 +64,14 @@ class Topic
      * 添加订阅
      * @param $topic
      * @param $uid
+     * @throws BadUTF8
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \ESD\BaseServer\Exception
      */
     public function addSub($topic, $uid)
     {
+        Utility::CheckTopicFilter($topic);
         $this->addSubFormTable($topic, $uid);
         $this->topicTable->set($topic . $uid, ["topic" => $topic, "uid" => $uid]);
         $this->debug("$uid Add Sub $topic");

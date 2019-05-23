@@ -102,7 +102,7 @@ class TopicPlugin extends AbstractPlugin
         $this->topicConfig->merge();
         $uidConfig = Server::$instance->getContainer()->get(UidConfig::class);
         $this->topicTable = new Table($this->topicConfig->getCacheTopicCount());
-        $this->topicTable->column("topic", Table::TYPE_STRING, 65535);
+        $this->topicTable->column("topic", Table::TYPE_STRING, $this->topicConfig->getTopicMaxLength());
         $this->topicTable->column("uid", Table::TYPE_STRING, $uidConfig->getUidMaxLength());
         $this->topicTable->create();
         //添加一个TopicProcess进程

@@ -27,7 +27,7 @@ class Utility
 
         $unicode_char = 0;
 
-        for ($i=0; isset($string[$i]); $i++) {
+        for ($i = 0; isset($string[$i]); $i++) {
             $c = ord($string[$i]);
             if ($pop_10s) {
                 # Check if following chars in multibytes are not 10xxxxxx
@@ -114,12 +114,17 @@ class Utility
      * Based on 4.7 Topic Names and Topic Filters
      *
      * @param string $topic_filter
+     * @throws BadUTF8
      * @throws Exception
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     static public function CheckTopicFilter($topic_filter)
     {
-        if (!isset($topic_filter[0]) || isset($topic_filter[65535])) {
-            throw new Exception('Topic filter must be at 1~65535 bytes long');
+        $max = Server::$instance->getContainer()->get(TopicConfig::class)->getTopicMaxLength();
+        $length = strlen($topic_filter);
+        if ($length == 0 || $length >= $max) {
+            throw new Exception("Topic filter must be at 1~$max long");
         }
         self::ValidateUTF8($topic_filter);
 
