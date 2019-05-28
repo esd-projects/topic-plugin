@@ -8,7 +8,7 @@
 
 namespace ESD\Plugins\Topic\Aspect;
 
-use ESD\BaseServer\Plugins\Logger\GetLogger;
+use ESD\Core\Plugins\Logger\GetLogger;
 use ESD\Plugins\Aop\OrderAspect;
 use ESD\Plugins\Topic\GetTopic;
 use ESD\Plugins\Uid\Aspect\UidAspect;

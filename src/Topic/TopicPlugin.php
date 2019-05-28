@@ -8,11 +8,11 @@
 
 namespace ESD\Plugins\Topic;
 
-use ESD\BaseServer\Memory\CrossProcess\Table;
-use ESD\BaseServer\Server\Context;
-use ESD\BaseServer\Server\PlugIn\AbstractPlugin;
-use ESD\BaseServer\Server\PlugIn\PluginInterfaceManager;
-use ESD\BaseServer\Server\Server;
+use ESD\Core\Context\Context;
+use ESD\Core\Memory\CrossProcess\Table;
+use ESD\Core\PlugIn\AbstractPlugin;
+use ESD\Core\PlugIn\PluginInterfaceManager;
+use ESD\Core\Server\Server;
 use ESD\Plugins\Aop\AopConfig;
 use ESD\Plugins\Topic\Aspect\TopicAspect;
 use ESD\Plugins\Uid\UidConfig;
@@ -43,6 +43,7 @@ class TopicPlugin extends AbstractPlugin
      * @param TopicConfig|null $topicConfig
      * @throws \ReflectionException
      * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function __construct(?TopicConfig $topicConfig = null)
     {
@@ -56,8 +57,9 @@ class TopicPlugin extends AbstractPlugin
      * @param PluginInterfaceManager $pluginInterfaceManager
      * @return mixed|void
      * @throws \DI\DependencyException
-     * @throws \ESD\BaseServer\Exception
      * @throws \ReflectionException
+     * @throws \DI\NotFoundException
+     * @throws \ESD\Core\Exception
      */
     public function onAdded(PluginInterfaceManager $pluginInterfaceManager)
     {
@@ -74,7 +76,7 @@ class TopicPlugin extends AbstractPlugin
     public function init(Context $context)
     {
         parent::init($context);
-        $aopConfig = Server::$instance->getContainer()->get(AopConfig::class);
+        $aopConfig = DIGet(AopConfig::class);
         $this->topicAspect = new TopicAspect();
         $aopConfig->addAspect($this->topicAspect);
     }
@@ -94,19 +96,19 @@ class TopicPlugin extends AbstractPlugin
      * @return mixed
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
-     * @throws \ESD\BaseServer\Server\Exception\ConfigException
+     * @throws \ESD\Core\Plugins\Config\ConfigException
      * @throws \ReflectionException
      */
     public function beforeServerStart(Context $context)
     {
         $this->topicConfig->merge();
-        $uidConfig = Server::$instance->getContainer()->get(UidConfig::class);
+        $uidConfig = DIGet(UidConfig::class);
         $this->topicTable = new Table($this->topicConfig->getCacheTopicCount());
         $this->topicTable->column("topic", Table::TYPE_STRING, $this->topicConfig->getTopicMaxLength());
         $this->topicTable->column("uid", Table::TYPE_STRING, $uidConfig->getUidMaxLength());
         $this->topicTable->create();
         //添加一个TopicProcess进程
-        $context->getServer()->addProcess($this->topicConfig->getProcessName(), TopicProcess::class, self::processGroupName);
+        Server::$instance->addProcess($this->topicConfig->getProcessName(), TopicProcess::class, self::processGroupName);
         return;
     }
 
@@ -114,6 +116,7 @@ class TopicPlugin extends AbstractPlugin
      * 在进程启动前
      * @param Context $context
      * @return mixed
+     * @throws \Exception
      */
     public function beforeProcessStart(Context $context)
     {

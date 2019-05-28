@@ -1,6 +1,6 @@
 {
   "require": {
-    "esd/base-server": "~0.1",
+    "esd/esd-core": "~0.1",
     "esd/uid-plugin": "~0.1",
     "esd/pack-plugin": "~0.1",
     "esd/process-rpc-plugin": "~0.1",

@@ -10,8 +10,8 @@ namespace ESD\Plugins\Topic;
 
 
 use Ds\Set;
-use ESD\BaseServer\Memory\CrossProcess\Table;
-use ESD\BaseServer\Plugins\Logger\GetLogger;
+use ESD\Core\Memory\CrossProcess\Table;
+use ESD\Core\Plugins\Logger\GetLogger;
 use ESD\Plugins\Pack\GetBoostSend;
 use ESD\Plugins\Uid\GetUid;
 
@@ -67,7 +67,6 @@ class Topic
      * @throws BadUTF8
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
-     * @throws \ESD\BaseServer\Exception
      */
     public function addSub($topic, $uid)
     {
@@ -81,6 +80,8 @@ class Topic
      * 移除订阅
      * @param $topic
      * @param $uid
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function removeSub($topic, $uid)
     {
@@ -98,6 +99,8 @@ class Topic
     /**
      * 清除Fd的订阅
      * @param $fd
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function clearFdSub($fd)
     {
@@ -109,6 +112,8 @@ class Topic
     /**
      * 清除Uid的订阅
      * @param $uid
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function clearUidSub($uid)
     {
@@ -180,6 +185,8 @@ class Topic
      * @param $topic
      * @param $data
      * @param array $excludeUidList
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function pub($topic, $data, $excludeUidList = [])
     {
@@ -199,6 +206,8 @@ class Topic
      * @param $uid
      * @param $data
      * @param $topic
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     private function pubToUid($uid, $data, $topic)
     {

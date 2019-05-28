@@ -8,9 +8,8 @@
 
 namespace ESD\Plugins\Topic;
 
-
-use ESD\BaseServer\Exception;
-use ESD\BaseServer\Server\Server;
+use ESD\Core\Exception;
+use Psr\Log\LoggerInterface;
 
 class Utility
 {
@@ -121,7 +120,7 @@ class Utility
      */
     static public function CheckTopicFilter($topic_filter)
     {
-        $max = Server::$instance->getContainer()->get(TopicConfig::class)->getTopicMaxLength();
+        $max = DIGet(TopicConfig::class)->getTopicMaxLength();
         $length = strlen($topic_filter);
         if ($length == 0 || $length >= $max) {
             throw new Exception("Topic filter must be at 1~$max long");
@@ -160,7 +159,7 @@ class Utility
         }
 
         if ($topic_filter[0] == '#') {
-            Server::$instance->getLog()->debug('If you want to subscribe topic begin with $, please subscribe both "#" and "$SOMETOPIC/#"');
+            DIGet(LoggerInterface::class)->debug('If you want to subscribe topic begin with $, please subscribe both "#" and "$SOMETOPIC/#"');
         }
     }
 }

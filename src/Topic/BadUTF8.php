@@ -9,7 +9,7 @@
 namespace ESD\Plugins\Topic;
 
 
-use ESD\BaseServer\Exception;
+use ESD\Core\Exception;
 
 class BadUTF8 extends Exception
 {
