@@ -33,7 +33,7 @@ class TopicAspect extends OrderAspect
      *
      * @param MethodInvocation $invocation Invocation
      * @throws \Throwable
-     * @Before("within(ESD\BaseServer\Server\IServerPort+) && execution(public **->onTcpClose(*))")
+     * @Before("within(ESD\Core\Server\Port\IServerPort+) && execution(public **->onTcpClose(*))")
      */
     protected function afterTcpClose(MethodInvocation $invocation)
     {
@@ -50,7 +50,7 @@ class TopicAspect extends OrderAspect
      *
      * @param MethodInvocation $invocation Invocation
      * @throws \Throwable
-     * @Before("within(ESD\BaseServer\Server\IServerPort+) && execution(public **->onWsClose(*))")
+     * @Before("within(ESD\Core\Server\Port\IServerPort+) && execution(public **->onWsClose(*))")
      */
     protected function afterWsClose(MethodInvocation $invocation)
     {
