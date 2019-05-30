@@ -41,7 +41,7 @@ class TopicPlugin extends AbstractPlugin
     /**
      * TopicPlugin constructor.
      * @param TopicConfig|null $topicConfig
-     * @throws \ReflectionException
+     *
      */
     public function __construct(?TopicConfig $topicConfig = null)
     {
@@ -54,9 +54,6 @@ class TopicPlugin extends AbstractPlugin
     /**
      * @param PluginInterfaceManager $pluginInterfaceManager
      * @return mixed|void
-     * @throws \DI\DependencyException
-     * @throws \ReflectionException
-     * @throws \DI\NotFoundException
      * @throws \ESD\Core\Exception
      */
     public function onAdded(PluginInterfaceManager $pluginInterfaceManager)
@@ -68,7 +65,7 @@ class TopicPlugin extends AbstractPlugin
     /**
      * @param Context $context
      * @return mixed|void
- */
+     */
     public function init(Context $context)
     {
         parent::init($context);
@@ -90,8 +87,8 @@ class TopicPlugin extends AbstractPlugin
      * 初始化
      * @param Context $context
      * @return mixed
- * @throws \ESD\Core\Plugins\Config\ConfigException
-     * @throws \ReflectionException
+     * @throws \ESD\Core\Plugins\Config\ConfigException
+     *
      */
     public function beforeServerStart(Context $context)
     {

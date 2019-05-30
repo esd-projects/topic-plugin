@@ -27,6 +27,7 @@ class TopicConfig extends BaseConfig
      * @var string
      */
     protected $processName = "helper";
+
     public function __construct()
     {
         parent::__construct(self::key);

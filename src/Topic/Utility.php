@@ -14,6 +14,60 @@ use Psr\Log\LoggerInterface;
 class Utility
 {
     /**
+     * Check Topic Filter
+     *
+     * Based on 4.7 Topic Names and Topic Filters
+     *
+     * @param string $topic_filter
+     * @throws BadUTF8
+     * @throws Exception
+     */
+    static public function CheckTopicFilter($topic_filter)
+    {
+        $max = DIGet(TopicConfig::class)->getTopicMaxLength();
+        $length = strlen($topic_filter);
+        if ($length == 0 || $length >= $max) {
+            throw new Exception("Topic filter must be at 1~$max long");
+        }
+        self::ValidateUTF8($topic_filter);
+
+        if (false !== strpos($topic_filter, chr(0))) {
+            throw new Exception('Null character is not allowed in topic');
+        }
+
+        $length = strlen($topic_filter);
+
+        /*
+         The multi-level wildcard character MUST be specified either on its own or following a topic level separator.
+         In either case it MUST be the last character specified in the Topic Filter [MQTT-4.7.1-2].
+         */
+        if (($p = strpos($topic_filter, '#')) !== false) {
+            if ($p != $length - 1) {
+                throw new Exception('"#" MUST be the last char in topic filter');
+            } else if ($length > 1 && $topic_filter[$length - 2] != '/') {
+                throw new Exception('"#" MUST occupy an entire level of the filter');
+            }
+        }
+
+        $levels = explode('/', $topic_filter);
+        foreach ($levels as $l) {
+            if ($l == '') {
+                continue;
+            } else if (strpos($l, '+') !== false && isset($l[1])) {
+                /*
+                 The single-level wildcard can be used at any level in the Topic Filter, including first and last levels.
+                 Where it is used it MUST occupy an entire level of the filter [MQTT-4.7.1-3].
+                 */
+                throw new Exception('"+" MUST occupy an entire level of the filter');
+            }
+        }
+
+        if ($topic_filter[0] == '#') {
+            DIGet(LoggerInterface::class)->debug('If you want to subscribe topic begin with $, please subscribe both "#" and "$SOMETOPIC/#"');
+        }
+    }
+
+    /**
      * Check if string is UTF-8
      *
      * @param string $string
@@ -105,59 +159,5 @@ class Utility
         }
 
         return true;
-    }
-
-    /**
-     * Check Topic Filter
-     *
-     * Based on 4.7 Topic Names and Topic Filters
-     *
-     * @param string $topic_filter
-     * @throws BadUTF8
-     * @throws Exception
-     */
-    static public function CheckTopicFilter($topic_filter)
-    {
-        $max = DIGet(TopicConfig::class)->getTopicMaxLength();
-        $length = strlen($topic_filter);
-        if ($length == 0 || $length >= $max) {
-            throw new Exception("Topic filter must be at 1~$max long");
-        }
-        self::ValidateUTF8($topic_filter);
-
-        if (false !== strpos($topic_filter, chr(0))) {
-            throw new Exception('Null character is not allowed in topic');
-        }
-
-        $length = strlen($topic_filter);
-
-        /*
-         The multi-level wildcard character MUST be specified either on its own or following a topic level separator.
-         In either case it MUST be the last character specified in the Topic Filter [MQTT-4.7.1-2].
-         */
-        if (($p = strpos($topic_filter, '#')) !== false) {
-            if ($p != $length - 1) {
-                throw new Exception('"#" MUST be the last char in topic filter');
-            } else if ($length > 1 && $topic_filter[$length - 2] != '/') {
-                throw new Exception('"#" MUST occupy an entire level of the filter');
-            }
-        }
-
-        $levels = explode('/', $topic_filter);
-        foreach ($levels as $l) {
-            if ($l == '') {
-                continue;
-            } else if (strpos($l, '+') !== false && isset($l[1])) {
-                /*
-                 The single-level wildcard can be used at any level in the Topic Filter, including first and last levels.
-                 Where it is used it MUST occupy an entire level of the filter [MQTT-4.7.1-3].
-                 */
-                throw new Exception('"+" MUST occupy an entire level of the filter');
-            }
-        }
-
-        if ($topic_filter[0] == '#') {
-            DIGet(LoggerInterface::class)->debug('If you want to subscribe topic begin with $, please subscribe both "#" and "$SOMETOPIC/#"');
-        }
     }
 }

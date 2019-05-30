@@ -20,11 +20,11 @@ class Topic
     use GetBoostSend;
     use GetUid;
     use GetLogger;
+    protected $subArr = [];
     /**
      * @var Table
      */
     private $topicTable;
-    protected $subArr = [];
 
     public function __construct(Table $topicTable)
     {
@@ -75,10 +75,33 @@ class Topic
     }
 
     /**
+     * 清除Fd的订阅
+     * @param $fd
+     */
+    public function clearFdSub($fd)
+    {
+        if (empty($fd)) return;
+        $uid = $this->getFdUid($fd);
+        $this->clearUidSub($uid);
+    }
+
+    /**
+     * 清除Uid的订阅
+     * @param $uid
+     */
+    public function clearUidSub($uid)
+    {
+        if (empty($uid)) return;
+        foreach ($this->subArr as $topic => $sub) {
+            $this->removeSub($topic, $uid);
+        }
+    }
+
+    /**
      * 移除订阅
      * @param $topic
      * @param $uid
- */
+     */
     public function removeSub($topic, $uid)
     {
         if (empty($uid)) return;
@@ -93,27 +116,21 @@ class Topic
     }
 
     /**
-     * 清除Fd的订阅
-     * @param $fd
-
+     * @param $topic
+     * @param $data
+     * @param array $excludeUidList
      */
-    public function clearFdSub($fd)
+    public function pub($topic, $data, $excludeUidList = [])
     {
-        if (empty($fd)) return;
-        $uid = $this->getFdUid($fd);
-        $this->clearUidSub($uid);
-    }
-
-    /**
-     * 清除Uid的订阅
-     * @param $uid
-
-     */
-    public function clearUidSub($uid)
-    {
-        if (empty($uid)) return;
-        foreach ($this->subArr as $topic => $sub) {
-            $this->removeSub($topic, $uid);
+        $tree = $this->buildTrees($topic);
+        foreach ($tree as $one) {
+            if (isset($this->subArr[$one])) {
+                foreach ($this->subArr[$one] as $uid) {
+                    if (!in_array($uid, $excludeUidList)) {
+                        $this->pubToUid($uid, $data, $topic);
+                    }
+                }
+            }
         }
     }
 
@@ -174,32 +191,10 @@ class Topic
         }
     }
 
-
-    /**
-     * @param $topic
-     * @param $data
-     * @param array $excludeUidList
-
-     */
-    public function pub($topic, $data, $excludeUidList = [])
-    {
-        $tree = $this->buildTrees($topic);
-        foreach ($tree as $one) {
-            if (isset($this->subArr[$one])) {
-                foreach ($this->subArr[$one] as $uid) {
-                    if (!in_array($uid, $excludeUidList)) {
-                        $this->pubToUid($uid, $data, $topic);
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * @param $uid
      * @param $data
      * @param $topic
-
      */
     private function pubToUid($uid, $data, $topic)
     {

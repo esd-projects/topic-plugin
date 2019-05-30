@@ -29,6 +29,14 @@ class TopicAspect extends OrderAspect
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return "TopicAspect";
+    }
+
+    /**
      * around onTcpReceive
      *
      * @param MethodInvocation $invocation Invocation
@@ -56,13 +64,5 @@ class TopicAspect extends OrderAspect
     {
         list($fd, $reactorId) = $invocation->getArguments();
         $this->clearFdSub($fd);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return "TopicAspect";
     }
 }

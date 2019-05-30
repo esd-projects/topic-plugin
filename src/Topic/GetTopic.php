@@ -19,21 +19,10 @@ trait GetTopic
     protected $topicConfig;
 
     /**
-     * @return TopicConfig|mixed
-     */
-    protected function getTopicConfig()
-    {
-        if ($this->topicConfig == null) {
-            $this->topicConfig = DIGet(TopicConfig::class);
-        }
-        return $this->topicConfig;
-    }
-
-    /**
      * @param $topic
      * @param $uid
      * @return bool
- * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function hasTopic($topic, $uid)
     {
@@ -46,10 +35,21 @@ trait GetTopic
     }
 
     /**
+     * @return TopicConfig|mixed
+     */
+    protected function getTopicConfig()
+    {
+        if ($this->topicConfig == null) {
+            $this->topicConfig = DIGet(TopicConfig::class);
+        }
+        return $this->topicConfig;
+    }
+
+    /**
      * 添加订阅
      * @param $topic
      * @param $uid
- * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function addSub($topic, $uid)
     {
@@ -65,7 +65,7 @@ trait GetTopic
      * 移除订阅
      * @param $topic
      * @param $uid
- * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function removeSub($topic, $uid)
     {
@@ -80,7 +80,7 @@ trait GetTopic
     /**
      * 清除Fd的订阅
      * @param $fd
- * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function clearFdSub($fd)
     {
@@ -95,7 +95,7 @@ trait GetTopic
     /**
      * 清除Uid的订阅
      * @param $uid
- * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function clearUidSub($uid)
     {
@@ -111,7 +111,7 @@ trait GetTopic
      * @param $topic
      * @param $data
      * @param array $excludeUidList
- * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function pub($topic, $data, $excludeUidList = [])
     {
