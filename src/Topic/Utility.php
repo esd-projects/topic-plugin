@@ -115,8 +115,6 @@ class Utility
      * @param string $topic_filter
      * @throws BadUTF8
      * @throws Exception
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
      */
     static public function CheckTopicFilter($topic_filter)
     {

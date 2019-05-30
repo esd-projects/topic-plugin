@@ -20,8 +20,6 @@ trait GetTopic
 
     /**
      * @return TopicConfig|mixed
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
      */
     protected function getTopicConfig()
     {
@@ -35,9 +33,7 @@ trait GetTopic
      * @param $topic
      * @param $uid
      * @return bool
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+ * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function hasTopic($topic, $uid)
     {
@@ -53,9 +49,7 @@ trait GetTopic
      * 添加订阅
      * @param $topic
      * @param $uid
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+ * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function addSub($topic, $uid)
     {
@@ -71,9 +65,7 @@ trait GetTopic
      * 移除订阅
      * @param $topic
      * @param $uid
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+ * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function removeSub($topic, $uid)
     {
@@ -88,9 +80,7 @@ trait GetTopic
     /**
      * 清除Fd的订阅
      * @param $fd
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+ * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function clearFdSub($fd)
     {
@@ -105,9 +95,7 @@ trait GetTopic
     /**
      * 清除Uid的订阅
      * @param $uid
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+ * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function clearUidSub($uid)
     {
@@ -123,9 +111,7 @@ trait GetTopic
      * @param $topic
      * @param $data
      * @param array $excludeUidList
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
+ * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
     public function pub($topic, $data, $excludeUidList = [])
     {

@@ -42,8 +42,6 @@ class TopicPlugin extends AbstractPlugin
      * TopicPlugin constructor.
      * @param TopicConfig|null $topicConfig
      * @throws \ReflectionException
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
      */
     public function __construct(?TopicConfig $topicConfig = null)
     {
@@ -70,9 +68,7 @@ class TopicPlugin extends AbstractPlugin
     /**
      * @param Context $context
      * @return mixed|void
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
+ */
     public function init(Context $context)
     {
         parent::init($context);
@@ -94,9 +90,7 @@ class TopicPlugin extends AbstractPlugin
      * 初始化
      * @param Context $context
      * @return mixed
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     * @throws \ESD\Core\Plugins\Config\ConfigException
+ * @throws \ESD\Core\Plugins\Config\ConfigException
      * @throws \ReflectionException
      */
     public function beforeServerStart(Context $context)

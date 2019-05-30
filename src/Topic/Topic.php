@@ -65,8 +65,6 @@ class Topic
      * @param $topic
      * @param $uid
      * @throws BadUTF8
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
      */
     public function addSub($topic, $uid)
     {
@@ -80,9 +78,7 @@ class Topic
      * 移除订阅
      * @param $topic
      * @param $uid
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
-     */
+ */
     public function removeSub($topic, $uid)
     {
         if (empty($uid)) return;
@@ -99,8 +95,7 @@ class Topic
     /**
      * 清除Fd的订阅
      * @param $fd
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+
      */
     public function clearFdSub($fd)
     {
@@ -112,8 +107,7 @@ class Topic
     /**
      * 清除Uid的订阅
      * @param $uid
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+
      */
     public function clearUidSub($uid)
     {
@@ -185,8 +179,7 @@ class Topic
      * @param $topic
      * @param $data
      * @param array $excludeUidList
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+
      */
     public function pub($topic, $data, $excludeUidList = [])
     {
@@ -206,8 +199,7 @@ class Topic
      * @param $uid
      * @param $data
      * @param $topic
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+
      */
     private function pubToUid($uid, $data, $topic)
     {
