@@ -199,6 +199,7 @@ class Topic
     private function pubToUid($uid, $data, $topic)
     {
         $fd = $this->getUidFd($uid);
+        if (empty($uid)) return;
         $this->autoBoostSend($fd, $data, $topic);
     }
 }
