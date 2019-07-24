@@ -116,6 +116,19 @@ class Topic
     }
 
     /**
+     * 删除主题
+     * @param $topic
+     */
+    public function delTopic($topic)
+    {
+        $uidArr = $this->subArr[$topic] ?? [];
+        unset($this->subArr[$topic]);
+        foreach ($uidArr as $uid) {
+            $this->topicTable->del($topic . $uid);
+        }
+    }
+
+    /**
      * @param $topic
      * @param $data
      * @param array $excludeUidList
