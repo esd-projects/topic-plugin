@@ -38,7 +38,7 @@ trait GetTopic
      * @param $topic
      * @throws \ESD\Plugins\ProcessRPC\ProcessRPCException
      */
-    public function delSub($topic)
+    public function delTopic($topic)
     {
         $rpcProxy = $this->callProcessName($this->getTopicConfig()->getProcessName(), Topic::class, true);
         $rpcProxy->delTopic($topic);
